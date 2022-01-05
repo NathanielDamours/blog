@@ -1,0 +1,15 @@
+
+digraph {
+    subgraph cluster_ai {
+        label="Artificial Intelligence";
+        "Your calculator";
+        subgraph cluster_ml {
+            label="Machine Learning";
+            "Linear Regression";
+            subgraph cluster_backend {
+                label="Neural network";
+                "Convolutional neural network";
+            }
+        }
+    }
+}

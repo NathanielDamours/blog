@@ -1,0 +1,2 @@
+digraph G{ rankdir="LR"Program[shape=box3d width=1 height=0.7]
+          Inputs->Program->Results; }
