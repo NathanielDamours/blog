@@ -4,8 +4,6 @@ title: About Me
 permalink: /about/
 ---
 
-This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
+I'm Nathaniel D'Amours : a software engineering student and a cofounder of the [CIA](https://cia.ift.ulaval.ca/).
 
-
-
-[^1]:a blogging platform that natively supports Jupyter notebooks in addition to other formats.
+![]({{ site.baseurl }}/images/ulaval_logo.png "Source: Université Laval.")
