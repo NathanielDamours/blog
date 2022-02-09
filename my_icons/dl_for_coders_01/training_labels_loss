@@ -1,0 +1,4 @@
+digraph G{ rankdir="LR"ordering=in
+          Model[shape=box3d width=1 height=0.7 label=Architecture]
+          Inputs->Model->Predictions; Parameters->Model;Labels->Loss; Predictions->Loss
+          Loss->Parameters[constraint=false label=updates]; }

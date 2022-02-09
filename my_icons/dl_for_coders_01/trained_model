@@ -1,0 +1,2 @@
+digraph G{ rankdir="LR"Model[shape=box3d width=1 height=0.7]
+          Inputs->Model->Predictions; }
