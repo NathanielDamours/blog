@@ -1,0 +1,6 @@
+digraph G{ rankdir="LR"ordering=in
+          Model[shape=box3d width=1 height=0.7]
+          Inputs [shape=none, width=0.5 height=0.7]
+          Inputs->Model->Predictions;
+          Predictions->Performance
+          Performance->Model[constraint=false label=updates]; }

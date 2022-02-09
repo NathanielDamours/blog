@@ -1,0 +1,5 @@
+digraph G{ rankdir="LR"ordering=in
+          Architecture[shape=box3d width=1 height=0.7]
+          # Inputs [shape=none,label="" width=0.5 height=0.7]
+          Inputs->Architecture->Predictions; Parameters->Architecture; Predictions->Performance
+          Performance->Parameters[constraint=false label=updates]; }
