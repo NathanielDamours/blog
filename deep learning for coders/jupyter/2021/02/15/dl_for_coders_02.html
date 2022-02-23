@@ -286,7 +286,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For many types of projects, you may be able to find all the data you need online. At the time of writing, the Bing image downloader from <a href="https://github.com/gurugaurav/bing_image_downloader">this repository</a> is probably the best option for finding and downloading images.</p>
+<p>For many types of projects, you may be able to find all the data you need online. At the time of writing, the Google image downloader from <a href="https://github.com/RiddlerQ/simple_image_download">this repository</a> is probably the best option for finding and downloading images.</p>
 
 </div>
 </div>
@@ -297,7 +297,7 @@ window.onload = wrap_img;
 <p></p>
 <div class="flash">
     <svg class="octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
-    <strong>Note: </strong>The Bing image downloader allows you to start quickly your DL project and iterate from there. However, you might encounter some issues with it such as a lot of duplicate images. Therefore, in your second iteration, during the creation of your dataset, you might use the solution proposed in the <a href="https://github.com/fastai/fastbook/blob/master/02_production.ipynb">fastbook</a>.
+    <strong>Note: </strong>The downloader allows you to start quickly your DL project and iterate from there. However, you might encounter some issues with it such as some irrelevent images or a lot of duplicate images. Therefore, in your second iteration, during the creation of your dataset, you might use some software such as this <a href="https://github.com/qarmin/czkawka">one</a> to delete the duplicates.
 </div>
 
 </div>
@@ -318,21 +318,19 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pip</span> install bing_image_downloader
-<span class="kn">from</span> <span class="nn">bing_image_downloader</span> <span class="kn">import</span> <span class="n">downloader</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pip</span> install simple_image_download
+<span class="kn">from</span> <span class="nn">simple_image_download</span> <span class="kn">import</span> <span class="n">simple_image_download</span> <span class="k">as</span> <span class="n">simp</span>
 
 
-<span class="n">bear_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'bears_dataset'</span><span class="p">)</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">bear_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-    <span class="n">bear_path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+<span class="n">image_downloader</span> <span class="o">=</span> <span class="n">simp</span><span class="o">.</span><span class="n">simple_image_download</span><span class="p">()</span>
+<span class="n">bear_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'grizzly bear'</span><span class="p">,</span> <span class="s1">'black bear'</span><span class="p">,</span> <span class="s1">'teddy bear'</span><span class="p">]</span>
 
-<span class="n">bear_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'grizzly bear'</span><span class="p">,</span><span class="s1">'black bear'</span><span class="p">,</span><span class="s1">'teddy bear'</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">bear_type</span> <span class="ow">in</span> <span class="n">bear_types</span><span class="p">:</span>
-    <span class="n">downloader</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">bear_type</span><span class="p">,</span>
-                        <span class="n">limit</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span>
-                        <span class="n">output_dir</span><span class="o">=</span><span class="n">bear_path</span><span class="p">)</span>
+    <span class="n">image_downloader</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">keywords</span><span class="o">=</span><span class="n">bear_type</span><span class="p">,</span>
+                              <span class="n">limit</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
 
-<span class="n">image_files</span> <span class="o">=</span> <span class="n">get_image_files</span><span class="p">(</span><span class="n">bear_path</span><span class="p">)</span>
+<span class="n">simple_images_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'simple_images'</span><span class="p">)</span>
+<span class="n">image_files</span> <span class="o">=</span> <span class="n">get_image_files</span><span class="p">(</span><span class="n">simple_images_path</span><span class="p">)</span>
 <span class="n">failed_images</span> <span class="o">=</span> <span class="n">verify_images</span><span class="p">(</span><span class="n">image_files</span><span class="p">)</span>
 <span class="n">failed_images</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">unlink</span><span class="p">)</span>
 </pre></div>
@@ -366,7 +364,7 @@ window.onload = wrap_img;
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(#450) [Path('bears_dataset/black bear/Image_1.jpg'),Path('bears_dataset/black bear/Image_10.jpg'),Path('bears_dataset/black bear/Image_100.jpg'),Path('bears_dataset/black bear/Image_101.jpg'),Path('bears_dataset/black bear/Image_102.bmp'),Path('bears_dataset/black bear/Image_103.png'),Path('bears_dataset/black bear/Image_104.jpg'),Path('bears_dataset/black bear/Image_105.jpg'),Path('bears_dataset/black bear/Image_106.jpg'),Path('bears_dataset/black bear/Image_107.jpg')...]</pre>
+<pre>(#488) [Path('simple_images/black_bear/black bear_1.png'),Path('simple_images/black_bear/black bear_10.jpeg'),Path('simple_images/black_bear/black bear_100.jpeg'),Path('simple_images/black_bear/black bear_101.jpeg'),Path('simple_images/black_bear/black bear_102.jpeg'),Path('simple_images/black_bear/black bear_103.jpeg'),Path('simple_images/black_bear/black bear_104.jpeg'),Path('simple_images/black_bear/black bear_105.jpeg'),Path('simple_images/black_bear/black bear_106.jpeg'),Path('simple_images/black_bear/black bear_107.jpeg')...]</pre>
 </div>
 
 </div>
@@ -426,7 +424,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pip</span> install bing_image_downloader
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pip</span> install simple_image_download
 </pre></div>
 
     </div>
@@ -439,7 +437,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This line is used to download images with Bing Image Search, it's the same thing as doing <code>pip install bing_image_downloader</code> in your terminal.</p>
+<p>This line is used to download images with Bing Image Search, it's the same thing as doing <code>pip install simple_image_download</code> in your terminal.</p>
 
 </div>
 </div>
@@ -451,7 +449,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">bing_image_downloader</span> <span class="kn">import</span> <span class="n">downloader</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">simple_image_download</span> <span class="kn">import</span> <span class="n">simple_image_download</span> <span class="k">as</span> <span class="n">simp</span>
 </pre></div>
 
     </div>
@@ -464,7 +462,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Here, we import the <code>downloader</code> from <code>bing_image_downloader</code> in order to use it to get the images from the web.</p>
+<p>Here, we import the <code>simple_image_download</code> as <code>simp</code> from <code>simple_image_download</code> in order to use it to get the images from the web.</p>
 
 </div>
 </div>
@@ -476,39 +474,12 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">bear_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'bears_dataset'</span><span class="p">)</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">bear_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-    <span class="n">bear_path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>This code creates a <code>Path</code> object and a directory from it if it didn't already exists.</p>
-
-</div>
-</div>
-</div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">bear_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'grizzly bear'</span><span class="p">,</span> <span class="s1">'black bear'</span><span class="p">,</span> <span class="s1">'teddy bear'</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">image_downloader</span> <span class="o">=</span> <span class="n">simp</span><span class="o">.</span><span class="n">simple_image_download</span><span class="p">()</span>
+<span class="n">bear_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'grizzly bear'</span><span class="p">,</span> <span class="s1">'black bear'</span><span class="p">,</span> <span class="s1">'teddy bear'</span><span class="p">]</span>
 
 <span class="k">for</span> <span class="n">bear_type</span> <span class="ow">in</span> <span class="n">bear_types</span><span class="p">:</span>
-    <span class="n">downloader</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">bear_type</span><span class="p">,</span>
-                        <span class="n">limit</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span>
-                        <span class="n">output_dir</span><span class="o">=</span><span class="n">bear_type</span><span class="p">)</span>
+    <span class="n">image_downloader</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">keywords</span><span class="o">=</span><span class="n">bear_type</span><span class="p">,</span>
+                              <span class="n">limit</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -521,7 +492,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Finally, we iterate over the <code>bear_types</code> in order to download <code>150</code> images stored in the <code>bear_type</code> folder. We actually do a Bing research with your query and return the first results.</p>
+<p>Finally, we iterate over the <code>bear_types</code> in order to download <code>150</code> images that will be stored in the <code>simple_images</code> folder. We actually do a Google search with your query and return the first results.</p>
 
 </div>
 </div>
@@ -534,19 +505,9 @@ window.onload = wrap_img;
 <li>
 <code>query</code>: String to be searched.</li>
 <li>
-<code>limit</code>: Number of images to download (optional, default is 100).</li>
+<code>limit</code>: Integer representing the numbers of files to download.</li>
 <li>
-<code>output_dir</code>: Name of output dir (optional, default is 'dataset').</li>
-<li>
-<code>adult_filter_off</code>: Enable of disable adult filteration (optional, default is True).</li>
-<li>
-<code>force_replace</code>: Delete folder if present and start a fresh download (optional, default is False).</li>
-<li>
-<code>timeout</code>: Timeout for connection in seconds (optional, default is 60).</li>
-<li>
-<code>filter</code>: Filter, choose from [line, photo, clipart, gif, transparent] (optional, default is "").</li>
-<li>
-<code>verbose</code>: Enable downloaded message (optional, default is True).</li>
+<code>extensions</code>: Set containing the extensions of the files (optional, default is {<code>.jpg</code>, <code>.png</code>, <code>.ico</code>, <code>.gif</code>, <code>.jpeg</code>}).</li>
 </ul>
 
 </div>
@@ -559,28 +520,12 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">image_files</span> <span class="o">=</span> <span class="n">get_image_files</span><span class="p">(</span><span class="n">bear_path</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">image_files</span> <span class="o">=</span> <span class="n">get_image_files</span><span class="p">(</span><span class="n">simple_images_path</span><span class="p">)</span>
 <span class="n">failed_images</span> <span class="o">=</span> <span class="n">verify_images</span><span class="p">(</span><span class="n">image_files</span><span class="p">)</span>
 <span class="n">failed_images</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">unlink</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>(#0) []</pre>
-</div>
-
-</div>
-
 </div>
 </div>
 
